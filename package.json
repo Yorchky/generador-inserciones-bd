@@ -1,0 +1,18 @@
+{
+  "name": "smart-data-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generador inteligente de datos falsos para bases de datos MySQL",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}
