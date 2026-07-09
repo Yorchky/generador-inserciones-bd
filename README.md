@@ -72,7 +72,7 @@ Antes de instalar, necesitas tener en tu computadora:
 
 ### 1. Clonar el proyecto
 ```bash
-git clone https://github.com/TU-USUARIO/generador-inserciones-bd.git
+git clone https://github.com/Yorchky/generador-inserciones-bd.git
 cd generador-inserciones-bd
 ```
 
