@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Data Generator</title>
+
+  <!-- Google Fonts: Poppins (títulos/botones) + Inter (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- Líneas verticales decorativas (como en tu Figma) -->
+      <div class="sidebar__lines" aria-hidden="true">
+        <div class="sidebar__line"></div>
+        <div class="sidebar__line"></div>
+        <div class="sidebar__line"></div>
+        <div class="sidebar__line"></div>
+      </div>
+
+      <!-- Menú 3D mejorado -->
+      <div class="menu" id="menu" data-active="info">
+        <div class="boton activo" id="info-btn">
+          <div class="tapa"></div>
+          <div class="medio"></div>
+          <div class="texto">INFO</div>
+          <div class="base"></div>
+        </div>
+
+        <div class="boton inactivo" id="login-btn">
+          <div class="tapa"></div>
+          <div class="medio"></div>
+          <div class="texto">LOGIN</div>
+          <div class="base"></div>
+        </div>
+
+        <div class="boton inactivo" id="about-btn">
+          <div class="tapa"></div>
+          <div class="medio"></div>
+          <div class="texto">ABOUT US</div>
+          <div class="base"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==========================================================
+         CONTENIDO PRINCIPAL
+    ========================================================== -->
+    <main class="content">
+
+      <!-- ---------------- PÁGINA: INFO ---------------- -->
+      <section class="page is-active" id="page-info" role="tabpanel" aria-labelledby="info">
+        <h1 class="page__title">Smart Data Generator</h1>
+
+        <div class="info-box">
+          <div class="info-box__header">
+            <h2 class="info-box__title">¿Para qué sirve?</h2>
+          </div>
+          <p class="info-box__text">
+            Automatiza la creación de datos de prueba para tus bases de datos
+            en cuestión de segundos. Selecciona una tabla, define la cantidad
+            de registros y deja que el sistema genere información válida
+            respetando la estructura y restricciones de la base de datos.
+          </p>
+        </div>
+
+        <div class="info-features">
+          <ul class="feature-list">
+            <li><button class="feature-btn">Generación rápida</button></li>
+            <li><button class="feature-btn">Datos Realistas</button></li>
+            <li><button class="feature-btn">Interfaz Intuitiva</button></li>
+            <li><button class="feature-btn">Registros Seguros</button></li>
+          </ul>
+
+          <div class="tech-stack">
+            <div class="tech-stack__row">
+              <span class="tech-icon" data-tech="gitkraken" title="GitKraken">
+                <i class="fa-solid fa-code-branch"></i>
+              </span>
+              <span class="tech-icon" data-tech="figma" title="Figma">
+                <i class="fa-brands fa-figma"></i>
+              </span>
+              <span class="tech-icon" data-tech="vscode" title="VS Code">
+                <i class="fa-solid fa-laptop-code"></i>
+              </span>
+            </div>
+            <div class="tech-stack__row">
+              <span class="tech-icon" data-tech="javascript" title="JavaScript">
+                <i class="fa-brands fa-js"></i>
+              </span>
+              <span class="tech-icon" data-tech="css3" title="CSS3">
+                <i class="fa-brands fa-css3-alt"></i>
+              </span>
+              <span class="tech-icon" data-tech="html5" title="HTML5">
+                <i class="fa-brands fa-html5"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------- PÁGINA: LOGIN ---------------- -->
+      <section class="page" id="page-login" role="tabpanel" aria-labelledby="login">
+        <div class="auth-card is-active" id="card-login">
+          <div class="auth-card__avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+
+          <form class="auth-form" id="form-login">
+            <div class="input-group">
+              <span class="input-group__icon"><i class="fa-solid fa-user"></i></span>
+              <input type="text" name="username" placeholder="username:" class="input-group__input" autocomplete="username">
+            </div>
+            <div class="input-group">
+              <span class="input-group__icon"><i class="fa-solid fa-lock"></i></span>
+              <input type="password" name="password" placeholder="password:" class="input-group__input" autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="auth-btn">LOGIN</button>
+            <a href="#" class="auth-link">forgot password?</a>
+          </form>
+
+          <hr class="auth-divider">
+
+          <p class="auth-switch">
+            Don't have an account?
+            <button type="button" class="auth-switch__btn" data-target="card-signup">SIGN UP</button>
+          </p>
+
+          <div class="social-row">
+            <button type="button" class="social-btn social-btn--google" aria-label="Continuar con Google">
+              <i class="fa-brands fa-google"></i>
+            </button>
+            <button type="button" class="social-btn social-btn--facebook" aria-label="Continuar con Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-card" id="card-signup">
+          <div class="auth-card__avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+
+          <form class="auth-form" id="form-signup">
+            <div class="input-group">
+              <span class="input-group__icon"><i class="fa-solid fa-user"></i></span>
+              <input type="text" name="new-username" placeholder="create username:" class="input-group__input" autocomplete="username">
+            </div>
+            <div class="input-group">
+              <span class="input-group__icon"><i class="fa-solid fa-lock"></i></span>
+              <input type="password" name="new-password" placeholder="create password:" class="input-group__input" autocomplete="new-password">
+            </div>
+            <div class="input-group">
+              <span class="input-group__icon"><i class="fa-solid fa-lock"></i></span>
+              <input type="password" name="confirm-password" placeholder="confirm password:" class="input-group__input" autocomplete="new-password">
+            </div>
+
+            <button type="submit" class="auth-btn">SIGN UP</button>
+          </form>
+
+          <hr class="auth-divider">
+
+          <p class="auth-switch">
+            Already have an account?
+            <button type="button" class="auth-switch__btn" data-target="card-login">LOGIN</button>
+          </p>
+
+          <div class="social-row">
+            <button type="button" class="social-btn social-btn--google" aria-label="Continuar con Google">
+              <i class="fa-brands fa-google"></i>
+            </button>
+            <button type="button" class="social-btn social-btn--facebook" aria-label="Continuar con Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------- PÁGINA: ABOUT US ---------------- -->
+      <section class="page" id="page-about" role="tabpanel" aria-labelledby="about">
+        <h1 class="page__title">ABOUT US</h1>
+        <div class="member-list">
+          <div class="member-card" data-member-id="1">
+            <div class="member-card__avatar"><i class="fa-solid fa-user"></i></div>
+            <p class="member-card__name">Chris</p>
+            <p class="member-card__role">Full-Stack Developer</p>
+            <p class="member-card__desc">Especialista en bases de datos SQL/NoSQL, APIs REST y arquitectura en la nube con 5+ años de experiencia.</p>
+            <button class="member-card__contact"><i class="fa-brands fa-linkedin-in"></i> CONTACTAR</button>
+          </div>
+          <div class="member-card" data-member-id="2">
+            <div class="member-card__avatar"><i class="fa-solid fa-user"></i></div>
+            <p class="member-card__name">Beto</p>
+            <p class="member-card__role">UX/UI Designer</p>
+            <p class="member-card__desc">Diseñador de interfaces intuitivas y experiencias de usuario fluidas. Experto en Figma, prototipado y testing de usabilidad.</p>
+            <button class="member-card__contact"><i class="fa-brands fa-linkedin-in"></i> CONTACTAR</button>
+          </div>
+          <div class="member-card" data-member-id="3">
+            <div class="member-card__avatar"><i class="fa-solid fa-user"></i></div>
+            <p class="member-card__name">Jorge</p>
+            <p class="member-card__role">DevOps Engineer</p>
+            <p class="member-card__desc">Automatización de infraestructura, CI/CD, Docker, Kubernetes y monitoreo de sistemas en producción a gran escala.</p>
+            <button class="member-card__contact"><i class="fa-brands fa-linkedin-in"></i> CONTACTAR</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>

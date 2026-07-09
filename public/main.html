@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Data Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styleh.css">
+  
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== TOPBAR ===== -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <h1 class="topbar__title">Smart Data Generator</h1>
+      <p class="topbar__welcome" id="welcomeMsg">Welcome, Christopher</p>
+    </div>
+    <div class="topbar__right">
+      <div class="topbar__avatar" id="userAvatar">CR</div>
+      <button class="topbar__logout" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
+    </div>
+  </header>
+
+  <div class="main-panel">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <button class="sidebar-nav__item is-active" data-page="tabla">
+          <i class="fa-solid fa-table"></i>
+          <span>Tabla</span>
+        </button>
+        <button class="sidebar-nav__item" data-page="generar">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Generar Datos</span>
+        </button>
+        <button class="sidebar-nav__item" data-page="vistaprevia">
+          <i class="fa-solid fa-eye"></i>
+          <span>Vista Previa</span>
+        </button>
+        <button class="sidebar-nav__item" data-page="insertar">
+          <i class="fa-solid fa-database"></i>
+          <span>Insertar</span>
+        </button>
+        <button class="sidebar-nav__item" data-page="historial">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Historial</span>
+        </button>
+        <button class="sidebar-nav__item" data-page="acerca">
+          <i class="fa-solid fa-info-circle"></i>
+          <span>Acerca de</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__divider"></div>
+
+      <!-- ===== CONNECTION INDICATOR ===== -->
+      <div class="connection" id="connection">
+        <span class="connection__dot" id="connDot"><i class="fa-solid fa-circle"></i></span>
+        <div class="connection__info">
+          <span class="connection__status" id="connStatus">Conectando...</span>
+          <span class="connection__db" id="connDb"></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== CONTENT ===== -->
+    <main class="content">
+      <canvas id="starsCanvas" class="stars-canvas"></canvas>
+
+      <!-- ===== STEPPER ===== -->
+      <div class="stepper" id="stepper">
+        <div class="stepper__step is-active" data-step="1">
+          <div class="stepper__circle"><span>1</span></div>
+          <span class="stepper__label">Tabla</span>
+        </div>
+        <div class="stepper__line" data-line="1"></div>
+        <div class="stepper__step" data-step="2">
+          <div class="stepper__circle"><span>2</span></div>
+          <span class="stepper__label">Generar</span>
+        </div>
+        <div class="stepper__line" data-line="2"></div>
+        <div class="stepper__step" data-step="3">
+          <div class="stepper__circle"><span>3</span></div>
+          <span class="stepper__label">Vista Previa</span>
+        </div>
+        <div class="stepper__line" data-line="3"></div>
+        <div class="stepper__step" data-step="4">
+          <div class="stepper__circle"><span>4</span></div>
+          <span class="stepper__label">Insertar</span>
+        </div>
+      </div>
+
+      <!-- ========== TABLA ========== -->
+      <section class="page is-active" id="page-tabla" data-wizard="true">
+        <h2 class="page__title">Seleccionar Tabla</h2>
+        <div class="card" id="selectedTablesCard" style="display:none;">
+          <div class="card__header">
+            <h3 class="card__title">Tablas Seleccionadas</h3>
+            <span class="card__subtitle" id="selectedCountLabel">0 / 3</span>
+          </div>
+          <div class="card__body" id="selectedTablesBody"></div>
+        </div>
+        <div class="card" id="availableTablesCard">
+          <div class="card__header">
+            <h3 class="card__title">Tablas Disponibles</h3>
+          </div>
+          <div class="card__body" id="availableTablesBody">
+            <p class="empty-msg">Cargando tablas...</p>
+          </div>
+        </div>
+        <div class="wizard-footer">
+          <button class="btn btn-wizard-next" id="wizardToGenerar" disabled>
+            Siguiente <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== GENERAR DATOS ========== -->
+      <section class="page" id="page-generar" data-wizard="true">
+        <h2 class="page__title">Generar Datos</h2>
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Configuraci&oacute;n por Tabla</h3>
+          </div>
+          <div class="card__body" id="generarContainer"></div>
+        </div>
+        <div class="wizard-footer">
+          <button class="btn btn-wizard-next" id="wizardToPreview" disabled>
+            Siguiente <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== VISTA PREVIA ========== -->
+      <section class="page" id="page-vistaprevia" data-wizard="true">
+        <h2 class="page__title">Vista Previa</h2>
+        <div id="previaContainer"></div>
+        <div class="wizard-footer">
+          <button class="btn btn-wizard-next" id="wizardToInsert" disabled>
+            Siguiente <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== INSERTAR ========== -->
+      <section class="page" id="page-insertar" data-wizard="true">
+        <h2 class="page__title">Insertar Registros</h2>
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Resumen</h3>
+          </div>
+          <div class="card__body" id="insertContainer"></div>
+        </div>
+      </section>
+
+      <!-- ========== HISTORIAL ========== -->
+      <section class="page" id="page-historial">
+        <h2 class="page__title">Historial de Inserciones</h2>
+        <div id="historialContainer">
+          <p class="empty-msg">Cargando historial...</p>
+        </div>
+      </section>
+
+      <!-- ========== ACERCA DE ========== -->
+      <section class="page" id="page-acerca">
+        <h2 class="page__title">Acerca de</h2>
+        <div class="card">
+          <div class="card__body">
+            <div class="about-section">
+              <h3 class="about-section__title">Generador Inteligente de Inserciones para Bases de Datos</h3>
+              <p class="about-section__text">
+                Automatiza la creaci&oacute;n de datos de prueba para tus bases de datos
+                en cuesti&oacute;n de segundos. Selecciona una tabla, define la cantidad
+                de registros y deja que el sistema genere informaci&oacute;n v&aacute;lida
+                respetando la estructura y restricciones de la base de datos.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Tecnolog&iacute;as Utilizadas</h3>
+          </div>
+          <div class="card__body">
+            <div class="tech-grid">
+              <span class="tech-item"><i class="fa-brands fa-html5"></i> HTML5</span>
+              <span class="tech-item"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+              <span class="tech-item"><i class="fa-brands fa-js"></i> JavaScript</span>
+              <span class="tech-item"><i class="fa-brands fa-node"></i> Node.js</span>
+              <span class="tech-item"><i class="fa-brands fa-node-js"></i> Express</span>
+              <span class="tech-item"><i class="fa-solid fa-database"></i> MySQL</span>
+              <span class="tech-item"><i class="fa-solid fa-wand-magic-sparkles"></i> Faker</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__header">
+            <h3 class="card__title">Equipo</h3>
+          </div>
+          <div class="card__body">
+            <div class="team-list">
+              <div class="team-item"><span class="team-item__name">Christopher</span><span class="team-item__role">Full-Stack Developer</span></div>
+              <div class="team-item"><span class="team-item__name">Beto</span><span class="team-item__role">UX/UI Designer</span></div>
+              <div class="team-item"><span class="team-item__name">Jorge</span><span class="team-item__role">DevOps Engineer</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__body about-version">
+            <span class="about-version__tag">v1.0.0</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

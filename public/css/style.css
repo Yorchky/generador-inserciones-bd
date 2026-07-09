@@ -1,0 +1,801 @@
+/* ==========================================================================
+   SMART DATA GENERATOR — style.css (v2 REFINADO)
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* ================================================================
+     PALETA DE COLORES — edita aquí los colores principales
+     ================================================================ */
+  --color-navy-dark: #2c2f6b;
+  --color-navy-light: #3a3d85;
+  --color-indigo: #4c4f92;
+  --color-indigo-light: #5c5fa8;
+  --color-white: #ffffff;
+  --color-input-bg: #dfe2e8;
+  --color-text-dark: #22243d;
+  --color-text-muted: #5a6072;
+
+  /* ================================================================
+     GLASS — variables compartidas para los efectos glassmorphism
+     ================================================================ */
+  --glass-blur-soft: 20px;
+  --glass-blur-medium: 16px;
+  --glass-blur-hard: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.20);
+
+  /* ================================================================
+     TIPOGRAFÍA
+     ================================================================ */
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --radius-card: 20px;
+
+  /* ================================================================
+     MENÚ 3D — escalas y solapamiento (edita aquí el tamaño del menú)
+     ================================================================ */
+  --overlap: 13px;        /* solapamiento entre botones inactivos */
+  --gap-activo: 23px;     /* separación cuando un botón está activo */
+}
+
+/* ================================================================
+   BODY + LAYOUT
+   ================================================================ */
+body {
+  font-family: var(--font-body);
+  min-height: 100vh;
+  background-image: url("../images/gradient_1440_1024.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 80px 80px 60px;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+/* ================================================================
+   SIDEBAR + LÍNEAS DECORATIVAS
+   ================================================================ */
+.sidebar {
+  position: relative;
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;  
+  padding: 40px 0 40px 40px;   
+}
+
+/* Líneas verticales detrás del menú — edita gap/grosor aquí */
+.sidebar__lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
+  padding-left: 40px;       
+  z-index: 1;
+  pointer-events: none;
+}
+
+.sidebar__line {
+  width: 17px;
+  background-color:#55687A;
+}
+
+/* ================================================================
+   MENÚ 3D — botones apilables con solapamiento
+   ⚠️  Edita las medidas aquí para cambiar el tamaño del menú
+   ================================================================ */
+.menu {
+  width: 280px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------------
+   Cada botón:
+   - width / height: tamaño total
+   - margin-top: negativo para solapar con el botón de arriba
+   --------------------------------------------------------------- */
+.boton {
+  width: 280px;
+  height: 110px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: calc(-38px - var(--overlap));
+}
+
+.boton:first-child {
+  margin-top: 0;
+}
+
+/* Z-index fijo: INFO > LOGIN > ABOUT para que el solapamiento se vea bien */
+#info-btn  { z-index: 3; }
+#login-btn { z-index: 2; }
+#about-btn { z-index: 1; }
+
+/* ---------------------------------------------------------------
+   ESTADOS — colores directos (transicionables)
+   --------------------------------------------------------------- */
+.boton.activo {
+  --top: #26275B;
+  --middle: #444E92;
+  --bottom: #444E92;
+  --text: white;
+}
+
+.boton.inactivo {
+  --top: #DADADA;
+  --middle: white;
+  --bottom: white;
+  --text: #52637C;
+}
+
+/* ---------------------------------------------------------------
+   PARTES del botón 3D (tapa → medio → base)
+   Transiciones: fade de 0.3s al desactivarse, instantáneo al activarse
+   --------------------------------------------------------------- */
+.tapa, .medio, .base {
+  transition: background 0.3s, box-shadow 0.3s, filter 0.3s;
+}
+.texto {
+  transition: color 0.3s;
+}
+
+.boton.activo .tapa,
+.boton.activo .medio,
+.boton.activo .base {
+  transition: background 0s, box-shadow 0s, filter 0s;
+}
+.boton.activo .texto {
+  transition: color 0s;
+}
+
+.tapa {
+  width: 220px;
+  height: 28px;
+  background: var(--top);
+  border-radius: 50%;
+  margin: auto;
+  position: relative;
+  top: 18px;
+  z-index: 3;
+}
+
+.medio {
+  width: 250px;
+  height: 52px;
+  background: var(--middle);
+  border-radius: 40px;
+  margin: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.base {
+  width: 220px;
+  height: 28px;
+  background: var(--bottom);
+  border-radius: 50%;
+  margin: auto;
+  position: relative;
+  top: -18px;
+  z-index: 1;
+}
+
+.texto {
+  position: absolute;
+  width: 100%;
+  top: 54px;
+  left: 0;
+  text-align: center;
+  color: var(--text);
+  font-size: 22px;
+  font-weight: bold;
+  font-family: var(--font-display);
+  z-index: 4;
+  pointer-events: none;
+}
+
+
+
+#menu[data-active="login"] #info-btn,
+#menu[data-active="info"] #info-btn {
+  transform: translateY(calc(-1 * (var(--gap-activo) + var(--overlap))));
+}
+
+#menu[data-active="about"] #info-btn {
+  transform: translateY(0);
+}
+
+#menu[data-active="login"] #about-btn,
+#menu[data-active="about"] #about-btn {
+  transform: translateY(calc(var(--gap-activo) + var(--overlap)));
+}
+
+#menu[data-active="info"] #about-btn {
+  transform: translateY(0);
+}
+
+/* ================================================================
+   PÁGINAS — navegación
+   ================================================================ */
+.page {
+  display: none;
+}
+
+.page.is-active {
+  display: block;
+}
+
+/* ================================================================
+   TÍTULO PRINCIPAL de cada página
+   ================================================================ */
+.page__title {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* ================================================================
+   GLASS — utilidad base (aplica a cualquier elemento)
+   ================================================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(var(--glass-blur-medium));
+  -webkit-backdrop-filter: blur(var(--glass-blur-medium));
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-card);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ================================================================
+   ═══════════════════════════════════════════════════════════════
+   PÁGINA: INFO
+   ═══════════════════════════════════════════════════════════════
+   ================================================================ */
+
+
+.info-box {
+  max-width: 680px;
+  margin: 0 auto 50px;
+  padding: 0;              
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(var(--glass-blur-soft));
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft));
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-card);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;          /* para que el header respete el border-radius */
+}
+
+/* Header más blanco (para el título) */
+.info-box__header {
+  background: rgba(255, 255, 255, 0.45);
+  padding: 28px 40px;
+}
+
+.info-box__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  text-align: center;
+  color: #1a1a2e;           
+  margin: 0;
+}
+
+.info-box__text {
+  padding: 24px 40px 32px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #22243d;           
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------
+   Layout de la fila: botones a la izquierda, tecnologías a la derecha
+   --------------------------------------------------------------- */
+.info-features {
+  display: flex;
+  gap: 60px;
+  max-width: 680px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;       /* ← centrado vertical de ambas columnas */
+  flex-wrap: wrap;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 260px;
+}
+
+.feature-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-indigo), var(--color-indigo-light));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.feature-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------------------------------------------------------------
+   Tech Stack — glass opaco, padding justo al contenido
+   Edita aquí el fondo y blur para cambiar la opacidad del glass
+   --------------------------------------------------------------- */
+.tech-stack {
+  padding: 20px;             /* ← padding reducido */
+  border-radius: 16px;
+  width: auto;               /* ← se ajusta al contenido */
+
+  /* Glass más opaco/sutil */
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(var(--glass-blur-hard));
+  -webkit-backdrop-filter: blur(var(--glass-blur-hard));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.tech-stack__row {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.tech-stack__row:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------
+   Iconos de tecnologías — cada uno con su color de marca
+   Edita los background de cada data-tech para cambiar colores
+   --------------------------------------------------------------- */
+.tech-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.tech-icon:hover {
+  transform: scale(1.12) translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.tech-icon[data-tech="gitkraken"] { background: #179287; }
+.tech-icon[data-tech="figma"]     { background: #F24E1E; }
+.tech-icon[data-tech="vscode"]    { background: #007ACC; }
+.tech-icon[data-tech="javascript"] { background: #F7DF1E; color: #000; }
+.tech-icon[data-tech="css3"]      { background: #1572B6; }
+.tech-icon[data-tech="html5"]     { background: #E34F26; }
+
+/* ================================================================
+   ═══════════════════════════════════════════════════════════════
+   PÁGINA: LOGIN / SIGN UP
+   ═══════════════════════════════════════════════════════════════
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   Tarjeta de autenticación (login/signup)
+   Color: #55687A al 54% · Borde blanco 3px
+   Edita aquí el fondo, border-radius y sombra del card
+   --------------------------------------------------------------- */
+.auth-card {
+  display: none;
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 48px 42px;
+  text-align: center;
+
+  /* Glass #55687A al 54% — edita rgba para cambiar color/opacidad */
+  background: rgba(85, 104, 122, 0.54);
+  backdrop-filter: blur(var(--glass-blur-medium));
+  -webkit-backdrop-filter: blur(var(--glass-blur-medium));
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.30);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.auth-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+.auth-card.is-active {
+  display: block;
+}
+
+/* ---------------------------------------------------------------
+   Avatar de usuario (círculo con icono)
+   --------------------------------------------------------------- */
+.auth-card__avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 28px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #45546f;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+}
+
+.auth-card:hover .auth-card__avatar {
+  transform: scale(1.05);
+}
+
+/* ---------------------------------------------------------------
+   Formulario y grupos de input
+   --------------------------------------------------------------- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 14px 18px;
+  transition: box-shadow 0.25s, background 0.25s;
+}
+
+.input-group:focus-within {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.input-group__icon {
+  color: var(--color-text-muted);
+  font-size: 16px;
+}
+
+.input-group__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  color: var(--color-text-dark);
+}
+
+.input-group__input::placeholder {
+  color: #888fa0;
+}
+
+/* ---------------------------------------------------------------
+   Botón principal de auth (LOGIN / SIGN UP)
+   Edita el border-radius para hacerlo más o menos redondo
+   --------------------------------------------------------------- */
+.auth-btn {
+  margin-top: 12px;
+  padding: 16px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--color-navy-dark), var(--color-navy-light));
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20);
+}
+
+.auth-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.auth-btn:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------
+   Enlaces y elementos secundarios del auth
+   --------------------------------------------------------------- */
+.auth-link {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #e4e6ee;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.auth-link:hover {
+  color: white;
+}
+
+.auth-divider {
+  margin: 28px 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-switch {
+  font-size: 14px;
+  color: #e4e6ee;
+  margin: 20px 0;
+}
+
+.auth-switch__btn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 0.2s;
+}
+
+.auth-switch__btn:hover {
+  color: #c8d0e0;
+}
+
+/* ---------------------------------------------------------------
+   Botones sociales (Google, Facebook)
+   --------------------------------------------------------------- */
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.social-btn {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.social-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.30);
+}
+
+.social-btn:active {
+  transform: scale(0.95);
+}
+
+.social-btn--google   { background: white; color: #ea4335; }
+.social-btn--facebook { background: #1877f2; color: white; }
+
+/* ================================================================
+   ═══════════════════════════════════════════════════════════════
+   PÁGINA: ABOUT US  —  tarjetas de perfil / contacto
+   ═══════════════════════════════════════════════════════════════
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   Grid de tarjetas de miembros
+   Edita gap para separación entre tarjetas
+   --------------------------------------------------------------- */
+.member-list {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------
+   Tarjeta individual — estilo perfil profesional
+   Ancho: 240px (más "guresa")
+   --------------------------------------------------------------- */
+.member-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 240px;               /* ← más ancha */
+  padding: 32px 24px 28px;
+  min-height: 360px;          /* ← altura mínima para que el botón quede abajo */
+
+  /* Glass sutil */
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(var(--glass-blur-hard));
+  -webkit-backdrop-filter: blur(var(--glass-blur-hard));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.35s, background 0.35s, border-color 0.35s, box-shadow 0.35s;
+}
+
+/* Hover sutil verde/teal */
+.member-card:hover {
+  transform: translateY(-8px);
+  background: rgba(100, 190, 150, 0.12);
+  border-color: rgba(100, 190, 150, 0.30);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+}
+
+.member-card__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  color: var(--color-text-muted);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s;
+}
+
+.member-card:hover .member-card__avatar {
+  transform: scale(1.08);
+}
+
+.member-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: white;
+  font-size: 20px;
+  margin-top: 4px;
+}
+
+.member-card__role {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.member-card__desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  width: 100%;
+  flex: 1;                    /* ← ocupa el espacio disponible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------
+   Botón de contacto (LinkedIn)
+   Edita colores y border-radius aquí
+   --------------------------------------------------------------- */
+.member-card__contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  margin-top: auto;           /* ← siempre al fondo de la tarjeta */
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  background: transparent;
+  color: white;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.member-card__contact i {
+  font-size: 15px;
+}
+
+.member-card__contact:hover {
+  background: #0A66C2;
+  border-color: #0A66C2;
+  color: white;
+  transform: scale(1.03);
+}
+
+/* ================================================================
+   RESPONSIVE — adaptación a pantallas más pequeñas
+   Edita los breakpoints según necesites
+   ================================================================ */
+@media (max-width: 1100px) {
+  .sidebar { width: 280px; padding-left: 30px; }
+  .content { padding: 60px 40px; }
+}
+
+@media (max-width: 768px) {
+  .app { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    padding: 20px 0;
+    min-height: auto;
+    justify-content: center;
+  }
+  .menu { width: 240px; }
+  .boton {
+    width: 240px;
+    height: 90px;
+    margin-top: calc(-30px - var(--overlap));
+  }
+  .tapa {
+    width: 190px;
+    height: 24px;
+    top: 16px;
+  }
+  .medio {
+    width: 215px;
+    height: 44px;
+  }
+  .base {
+    width: 190px;
+    height: 24px;
+    top: -16px;
+  }
+  .texto {
+    font-size: 20px;
+    top: 46px;
+  }
+  .content { padding: 40px 20px; }
+  .info-features { flex-direction: column; align-items: center; gap: 40px; }
+  .member-list { gap: 24px; }
+  .member-card { width: 200px; }
+}
